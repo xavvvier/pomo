@@ -9,14 +9,48 @@ import Cocoa
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-
-    
+//
+    let statusBarItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
+    let popover = NSPopover()
+    var reference: Double!;
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        statusBarItem.button?.toolTip = "Running";
+        let statusBarMenu = NSMenu();
+        statusBarItem.menu = statusBarMenu;
+        
+        let icon = NSImage(named: "icon3.png");
+        icon?.isTemplate = true;
+        statusBarItem.button?.image = icon;
+
+        statusBarMenu.addItem(
+            withTitle: "Start Timer",
+            action: #selector(startTimer),
+            keyEquivalent: "")
+
+        statusBarMenu.addItem(
+            withTitle: "Stop Timer",
+            action: #selector(stopTimer),
+            keyEquivalent: "")
+        
     }
 
+    @objc func startTimer() {
+            NSLog("Starting timer")
+        statusBarItem.button?.image = nil;
+        statusBarItem.button?.title = "▶︎ 22";
+    }
+    
+    @objc func stopTimer() {
+            NSLog("Stopping timer")
+        let icon = NSImage(named: "icon3.png");
+        icon?.isTemplate = true;
+        statusBarItem.button?.image = icon;
+        statusBarItem.button?.title = "";
+    }
+    
+    
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }

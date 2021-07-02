@@ -14,6 +14,9 @@
 		1D9CCC78268F375D0034A4B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CCC76268F375D0034A4B2 /* Main.storyboard */; };
 		1D9CCC84268F375D0034A4B2 /* PomoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CCC83268F375D0034A4B2 /* PomoTests.swift */; };
 		1D9CCC8F268F375D0034A4B2 /* PomoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CCC8E268F375D0034A4B2 /* PomoUITests.swift */; };
+		1D9CCC9D268F3E2C0034A4B2 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CCC9C268F3E2C0034A4B2 /* PopupViewController.swift */; };
+		1D9CCCA1268F6C650034A4B2 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CCCA0268F6C650034A4B2 /* icon.png */; };
+		1D9CCCA5268F71C80034A4B2 /* icon3.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CCCA4268F71C80034A4B2 /* icon3.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,9 @@
 		1D9CCC8A268F375D0034A4B2 /* PomoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PomoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D9CCC8E268F375D0034A4B2 /* PomoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomoUITests.swift; sourceTree = "<group>"; };
 		1D9CCC90268F375D0034A4B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D9CCC9C268F3E2C0034A4B2 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
+		1D9CCCA0268F6C650034A4B2 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		1D9CCCA4268F71C80034A4B2 /* icon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon3.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +104,8 @@
 		1D9CCC6C268F375C0034A4B2 /* Pomo */ = {
 			isa = PBXGroup;
 			children = (
+				1D9CCCA4268F71C80034A4B2 /* icon3.png */,
+				1D9CCCA0268F6C650034A4B2 /* icon.png */,
 				1D9CCC6D268F375C0034A4B2 /* AppDelegate.swift */,
 				1D9CCC6F268F375C0034A4B2 /* ViewController.swift */,
 				1D9CCC74268F375D0034A4B2 /* Assets.xcassets */,
@@ -105,6 +113,7 @@
 				1D9CCC79268F375D0034A4B2 /* Info.plist */,
 				1D9CCC7A268F375D0034A4B2 /* Pomo.entitlements */,
 				1D9CCC71268F375C0034A4B2 /* Pomo.xcdatamodeld */,
+				1D9CCC9C268F3E2C0034A4B2 /* PopupViewController.swift */,
 			);
 			path = Pomo;
 			sourceTree = "<group>";
@@ -232,6 +241,8 @@
 			files = (
 				1D9CCC75268F375D0034A4B2 /* Assets.xcassets in Resources */,
 				1D9CCC78268F375D0034A4B2 /* Main.storyboard in Resources */,
+				1D9CCCA1268F6C650034A4B2 /* icon.png in Resources */,
+				1D9CCCA5268F71C80034A4B2 /* icon3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +270,7 @@
 				1D9CCC70268F375C0034A4B2 /* ViewController.swift in Sources */,
 				1D9CCC6E268F375C0034A4B2 /* AppDelegate.swift in Sources */,
 				1D9CCC73268F375C0034A4B2 /* Pomo.xcdatamodeld in Sources */,
+				1D9CCC9D268F3E2C0034A4B2 /* PopupViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
