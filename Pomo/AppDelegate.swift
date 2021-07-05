@@ -13,41 +13,48 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let statusBarItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
     let popover = NSPopover()
     var reference: Double!;
+    let statusBarMenu = NSMenu(title: "");
 
+    let startMenuItem = NSMenuItem(title: "Start", action: #selector(startTimer), keyEquivalent: "")
+    let stopMenuItem = NSMenuItem(title: "Stop", action: nil, keyEquivalent: "")
+    let timer = TimeoutHandler()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusBarItem.button?.toolTip = "Running";
-        let statusBarMenu = NSMenu();
         statusBarItem.menu = statusBarMenu;
         
         let icon = NSImage(named: "icon3.png");
         icon?.isTemplate = true;
         statusBarItem.button?.image = icon;
 
+        statusBarMenu.addItem(startMenuItem)
+        statusBarMenu.addItem(stopMenuItem)
+        statusBarMenu.addItem(NSMenuItem.separator())
         statusBarMenu.addItem(
-            withTitle: "Start Timer",
-            action: #selector(startTimer),
+            withTitle: "Settings...",
+            action: nil,
             keyEquivalent: "")
-
-        statusBarMenu.addItem(
-            withTitle: "Stop Timer",
-            action: #selector(stopTimer),
-            keyEquivalent: "")
-        
     }
 
     @objc func startTimer() {
             NSLog("Starting timer")
         statusBarItem.button?.image = nil;
-        statusBarItem.button?.title = "▶︎ 22";
+        statusBarItem.button?.title = "▶︎ 25s";
+        statusBarMenu.items[0].action = nil
+        statusBarMenu.items[1].action = #selector(stopTimer)
+        timer.callback = stopTimer
+        timer.start(15)
     }
     
     @objc func stopTimer() {
+        timer.cancel()
             NSLog("Stopping timer")
         let icon = NSImage(named: "icon3.png");
         icon?.isTemplate = true;
         statusBarItem.button?.image = icon;
         statusBarItem.button?.title = "";
+        statusBarMenu.items[0].action = #selector(startTimer)
+        statusBarMenu.items[1].action = nil
     }
     
     
