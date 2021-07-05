@@ -15,6 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let popover = NSPopover()
     var reference: Double!;
     let statusBarMenu = NSMenu(title: "");
+    var startDate: NSDate = NSDate()
 
     let startMenuItem = NSMenuItem(title: "Start", action: #selector(startTimer), keyEquivalent: "")
     let stopMenuItem = NSMenuItem(title: "Stop", action: nil, keyEquivalent: "")
@@ -53,16 +54,55 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func startTimer() {
         statusBarItem.button?.toolTip = "In a POMO!";
         statusBarItem.button?.image = nil;
-        statusBarItem.button?.title = "▶︎ 25s";
         statusBarMenu.items[0].action = nil
         statusBarMenu.items[1].action = #selector(cancelTimer)
-        timer.callback = completeTimer
-        timer.start(15)
+        startDate = NSDate()
+        timer.timeoutCallback = completeTimer
+        timer.tickerCallback = elapsedTimer
+        timer.start(25*60)
+    }
+
+    @objc func elapsedTimer(remaining: String) {
+        statusBarItem.button?.title = "▶︎ \(remaining)";
     }
     
     @objc func completeTimer() {
         cancelTimer()
+        savePomoMO()
         showNotification()
+    }
+//
+//    func showStoredItems() {
+//
+//        do {
+//            let context = self.persistentContainer.viewContext
+//            let items = try context.fetch(PomoMO.fetchRequest()) as! [PomoMO]
+//            let formatter = DateFormatter()
+//            formatter.timeStyle = .medium
+//            for item in items{
+//                print(item.duration)
+//                print(formatter.string(from: item.start!))
+//                print(formatter.string(from: item.end!))
+//            }
+//        } catch {
+//            NSLog("Error reading saved Pomos")
+//        }
+//    }
+    
+    func savePomoMO() {
+        do {
+            let context = self.persistentContainer.viewContext
+            let modelObject = PomoMO(context: context)
+            modelObject.id = UUID()
+            modelObject.start = startDate as Date?
+            let endDate = NSDate()
+            modelObject.end = endDate as Date?
+            let timeInterval = modelObject.end?.timeIntervalSince(modelObject.start!)
+            modelObject.duration = Int32(timeInterval!)
+            try context.save()
+        } catch {
+            print("Error saving the model object")
+        }
     }
     
     func showNotification() {
