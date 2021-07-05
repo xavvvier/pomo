@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import UserNotifications
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -20,13 +21,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let timer = TimeoutHandler()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        statusBarItem.button?.toolTip = "Running";
+        statusBarItem.button?.toolTip = "Click start to begin a new Pomo";
+        
         statusBarItem.menu = statusBarMenu;
         
         let icon = NSImage(named: "icon3.png");
         icon?.isTemplate = true;
         statusBarItem.button?.image = icon;
 
+        self.buildMenu()
+    }
+    
+    func buildMenu() {
         statusBarMenu.addItem(startMenuItem)
         statusBarMenu.addItem(stopMenuItem)
         statusBarMenu.addItem(NSMenuItem.separator())
@@ -34,21 +40,46 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             withTitle: "Settings...",
             action: nil,
             keyEquivalent: "")
+        statusBarMenu.addItem(
+                withTitle: "Quit",
+            action: #selector(quit),
+                keyEquivalent: "")
+    }
+    
+    @objc func quit() {
+        NSApplication.shared.terminate(nil)
     }
 
     @objc func startTimer() {
-            NSLog("Starting timer")
+        statusBarItem.button?.toolTip = "In a POMO!";
         statusBarItem.button?.image = nil;
         statusBarItem.button?.title = "▶︎ 25s";
         statusBarMenu.items[0].action = nil
-        statusBarMenu.items[1].action = #selector(stopTimer)
-        timer.callback = stopTimer
+        statusBarMenu.items[1].action = #selector(cancelTimer)
+        timer.callback = completeTimer
         timer.start(15)
     }
     
-    @objc func stopTimer() {
+    @objc func completeTimer() {
+        cancelTimer()
+        showNotification()
+    }
+    
+    func showNotification() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
+            if granted {
+                print("Local Notification Authorization granted")
+            } else {
+                print("Local Notification Authorization request rejected")
+            }
+        }
+        showLocalNotification(title: "Time's Up", subtitle: "Take a break")
+    }
+    
+    @objc func cancelTimer() {
+        statusBarItem.button?.toolTip = "Click start to begin a new Pomo";
         timer.cancel()
-            NSLog("Stopping timer")
         let icon = NSImage(named: "icon3.png");
         icon?.isTemplate = true;
         statusBarItem.button?.image = icon;
@@ -57,6 +88,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarMenu.items[1].action = nil
     }
     
+    func showLocalNotification(title: String, subtitle: String) {
+        let center = UNUserNotificationCenter.current()
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.subtitle = subtitle
+        content.sound = UNNotificationSound.default
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
+        center.add(request)
+    }
     
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
