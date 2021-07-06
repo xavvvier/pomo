@@ -8,6 +8,10 @@
 import Cocoa
 import UserNotifications
 
+class SomeView: NSTextView {
+
+}
+
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 //
@@ -34,6 +38,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func buildMenu() {
+        let myView1 = CircularSlider(frame: NSRect(x: 0.0, y: 0.0, width: 250, height: 30))
+        myView1.cornerRadius = 6
+        stopMenuItem.view = myView1
         statusBarMenu.addItem(startMenuItem)
         statusBarMenu.addItem(stopMenuItem)
         statusBarMenu.addItem(NSMenuItem.separator())

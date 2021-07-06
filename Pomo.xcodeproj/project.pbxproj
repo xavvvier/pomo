@@ -17,6 +17,8 @@
 		1D9CCCA1268F6C650034A4B2 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CCCA0268F6C650034A4B2 /* icon.png */; };
 		1D9CCCA5268F71C80034A4B2 /* icon3.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CCCA4268F71C80034A4B2 /* icon3.png */; };
 		1D9CCCA92693278B0034A4B2 /* TimeoutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CCCA82693278B0034A4B2 /* TimeoutHandler.swift */; };
+		1D9CCCAD26947F3D0034A4B2 /* CircularSlider.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9CCCAC26947F3C0034A4B2 /* CircularSlider.xib */; };
+		1D9CCCAF269483C40034A4B2 /* CircularSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9CCCAE269483C40034A4B2 /* CircularSlider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		1D9CCCA0268F6C650034A4B2 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		1D9CCCA4268F71C80034A4B2 /* icon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon3.png; sourceTree = "<group>"; };
 		1D9CCCA82693278B0034A4B2 /* TimeoutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutHandler.swift; sourceTree = "<group>"; };
+		1D9CCCAC26947F3C0034A4B2 /* CircularSlider.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircularSlider.xib; sourceTree = "<group>"; };
+		1D9CCCAE269483C40034A4B2 /* CircularSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularSlider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 				1D9CCC7A268F375D0034A4B2 /* Pomo.entitlements */,
 				1D9CCC71268F375C0034A4B2 /* Pomo.xcdatamodeld */,
 				1D9CCCA82693278B0034A4B2 /* TimeoutHandler.swift */,
+				1D9CCCAC26947F3C0034A4B2 /* CircularSlider.xib */,
+				1D9CCCAE269483C40034A4B2 /* CircularSlider.swift */,
 			);
 			path = Pomo;
 			sourceTree = "<group>";
@@ -241,6 +247,7 @@
 			files = (
 				1D9CCC75268F375D0034A4B2 /* Assets.xcassets in Resources */,
 				1D9CCC78268F375D0034A4B2 /* Main.storyboard in Resources */,
+				1D9CCCAD26947F3D0034A4B2 /* CircularSlider.xib in Resources */,
 				1D9CCCA1268F6C650034A4B2 /* icon.png in Resources */,
 				1D9CCCA5268F71C80034A4B2 /* icon3.png in Resources */,
 			);
@@ -270,6 +277,7 @@
 				1D9CCC70268F375C0034A4B2 /* ViewController.swift in Sources */,
 				1D9CCC6E268F375C0034A4B2 /* AppDelegate.swift in Sources */,
 				1D9CCC73268F375C0034A4B2 /* Pomo.xcdatamodeld in Sources */,
+				1D9CCCAF269483C40034A4B2 /* CircularSlider.swift in Sources */,
 				1D9CCCA92693278B0034A4B2 /* TimeoutHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
