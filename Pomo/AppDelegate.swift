@@ -30,7 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         statusBarItem.menu = statusBarMenu;
         
-        let icon = NSImage(named: "icon3.png");
+        let icon = NSImage(named: "icon2");
         icon?.isTemplate = true;
         statusBarItem.button?.image = icon;
 
@@ -38,8 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func buildMenu() {
-        let myView1 = CircularSlider(frame: NSRect(x: 0.0, y: 0.0, width: 250, height: 30))
-        myView1.cornerRadius = 6
+        let myView1 = CircularSlider(frame: NSRect(x: 0.0, y: 0.0, width: 150, height: 130))
         stopMenuItem.view = myView1
         statusBarMenu.addItem(startMenuItem)
         statusBarMenu.addItem(stopMenuItem)

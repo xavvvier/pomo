@@ -7,23 +7,14 @@
 
 import Cocoa
 import CoreFoundation
+import CoreGraphics
 
 @IBDesignable
 final class CircularSlider: NSView {
     // MARK: - Properties
     
     @IBInspectable
-    var cornerRadius: CGFloat {
-        set {
-            layer?.cornerRadius = newValue
-        }
-        get {
-            return layer!.cornerRadius
-        }
-    }
-    
-    @IBInspectable
-    var segments: [String] = ["One", "Two", "..."]
+    var trackWidth: CGFloat = 20
     
     @IBInspectable
     var segmentColor: NSColor = .lightGray
@@ -58,92 +49,103 @@ final class CircularSlider: NSView {
         paragraph.alignment = .center
         return paragraph.copy() as! NSParagraphStyle
     }()
-    private var segmentSize: CGFloat {
-        return frame.width / CGFloat(segments.count)
-    }
     
     // MARK: - Initializers
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.wantsLayer = true
-        self.layer?.cornerRadius = 3
-        //configure()
+        
+        let trackingArea = NSTrackingArea(rect: bounds, options: [ .activeAlways, .enabledDuringMouseDrag, .mouseEnteredAndExited], owner: self, userInfo: nil)
+        addTrackingArea(trackingArea)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        //configure()
     }
     
-//    private func configure() {
-//        addGestureRecognizer(
-//            NSTapGestureRecognizer(target: self, action: #selector(didTap(recognizer:)))
-//        )
-//    }
-//
     // MARK: - Actions
-
-    @objc
-    override func mouseUp(with event: NSEvent) {
-        activeIndex = Int(event.locationInWindow.x / segmentSize)
-    }
-
     
-    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
-        return true
+    override func mouseEntered(with event: NSEvent) {
+        super.mouseEntered(with: event)
+        NSLog("mouse entered")
+    }
+    
+    override func mouseExited(with event: NSEvent) {
+        super.mouseExited(with: event)
+        NSLog("mouse exited")
+    }
+    
+    override func mouseDragged(with event: NSEvent) {
+        super.mouseDragged(with: event)
+        NSCursor.crosshair.set()
+        //let location = event.locationInWindow
+        //let location = event.locationInWindow
+        let location = self.convert(event.locationInWindow, from: nil)
+        
+        NSLog("mouse dragged x: \(location.x) y: \(location.y)")
+        if location.x > 40 {
+            NSCursor.openHand.set()
+        }
     }
     // MARK: - Drawing
-    
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         //guard let context = NSGraphicsContext.current else { return }
         //guard let context = NSGraphicsGetCurrentContext() else { return }
-        
         /*
          Draw background
         */
-        segmentColor.setFill()
-        //context.setFillColor(segmentColor.cgColor)
-        let backgroundPath = NSBezierPath.init(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
-        backgroundPath.fill()
+        let path = NSBezierPath()
+        let origin = CGPoint(x: rect.midX, y: rect.midY)
+        let radius = min(rect.height/2, rect.width/2)
+        path.appendArc(withCenter: origin, radius: radius - trackWidth, startAngle: 0, endAngle: 360)
+        path.windingRule = NSBezierPath.WindingRule.evenOdd
+        path.appendArc(withCenter: origin, radius: radius, startAngle: 0, endAngle: 360)
+        path.fill()
         
-        /*
-         Enumerate segments property and call drawing function for each item
-         */
-        segments.enumerated().forEach { index, title in
-            let rect = CGRect(x: CGFloat(index) * segmentSize, y: 0, width: segmentSize, height: frame.height)
-            
-            if activeIndex == index {
-                /*
-                 Draw background for active index
-                 */
-                activeSegmentColor.setFill()
-                //context.setFillColor(activeSegmentColor.cgColor)
-                let path = NSBezierPath.init(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
-                path.fill()
-                
-                draw(text: title, in: rect, with: activeTextColor, and: activeFont)
-            } else {
-                draw(text: title, in: rect, with: textColor, and: font)
-            }
-        }
+//        if Date.init().timeIntervalSince1970 > 0 {
+//            return
+//        }
+//        segmentColor.setFill()
+//        //context.setFillColor(segmentColor.cgColor)
+//        let backgroundPath = NSBezierPath.init(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
+//        backgroundPath.fill()
+        
+        
+//        /*
+//         Enumerate segments property and call drawing function for each item
+//         */
+//        segments.enumerated().forEach { index, title in
+//            let rect = CGRect(x: CGFloat(index) * segmentSize, y: 0, width: segmentSize, height: frame.height)
+//
+//            if activeIndex == index {
+//                /*
+//                 Draw background for active index
+//                 */
+//                activeSegmentColor.setFill()
+//                //context.setFillColor(activeSegmentColor.cgColor)
+//                let path = NSBezierPath.init(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
+//                path.fill()
+//
+//                draw(text: title, in: rect, with: activeTextColor, and: activeFont)
+//            } else {
+//                draw(text: title, in: rect, with: textColor, and: font)
+//            }
+//        }
     }
     
-    private func draw(text: String, in rect: CGRect, with color: NSColor, and font: NSFont) {
-        /*
-         Draw text with incomming parameters
-         */
-        var rect = rect
-        let attributes: [NSAttributedString.Key: Any] = [.font: font,
-                                                        .foregroundColor: color,
-                                                        .paragraphStyle: paragraphStyle]
-        let string = NSAttributedString(string: text, attributes: attributes)
-        let size = string.size()
-        rect.origin.y = (frame.height - size.height) / 2
-        rect.size.height = size.height
-        string.draw(in: rect)
-    }
+//    private func draw(text: String, in rect: CGRect, with color: NSColor, and font: NSFont) {
+//        /*
+//         Draw text with incomming parameters
+//         */
+//        var rect = rect
+//        let attributes: [NSAttributedString.Key: Any] = [.font: font,
+//                                                        .foregroundColor: color,
+//                                                        .paragraphStyle: paragraphStyle]
+//        let string = NSAttributedString(string: text, attributes: attributes)
+//        let size = string.size()
+//        rect.origin.y = (frame.height - size.height) / 2
+//        rect.size.height = size.height
+//        string.draw(in: rect)
+//    }
     
 }
