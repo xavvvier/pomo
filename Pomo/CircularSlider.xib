@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -9,11 +10,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="517" height="502"/>
+            <rect key="frame" x="0.0" y="0.0" width="597" height="593"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JI9-io-D4f" customClass="CircularSlider" customModule="Pomo" customModuleProvider="target">
-                    <rect key="frame" x="20" y="20" width="477" height="462"/>
+                    <rect key="frame" x="0.0" y="97" width="547" height="486"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="300" id="3DK-P7-OTN"/>
                     </constraints>
@@ -22,10 +23,10 @@
                             <color key="value" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="color" keyPath="activeSegmentColor">
-                            <color key="value" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
+                            <color key="value" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                            <color key="value" name="gridColor" catalog="System" colorSpace="catalog"/>
+                            <color key="value" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="color" keyPath="activeTextColor">
                             <color key="value" name="selectedControlColor" catalog="System" colorSpace="catalog"/>
@@ -38,7 +39,25 @@
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="other" value="YES"/>
                         <userDefinedRuntimeAttribute type="number" keyPath="trackWidth">
-                            <real key="value" value="50"/>
+                            <real key="value" value="52"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="trackGap">
+                            <real key="value" value="6"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="trackColor">
+                            <color key="value" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="startFocusMinute">
+                            <integer key="value" value="0"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="endFocusMinute">
+                            <integer key="value" value="30"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="focusTime">
+                            <integer key="value" value="25"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="idleTime">
+                            <integer key="value" value="5"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </customView>
@@ -48,7 +67,7 @@
                 <constraint firstItem="JI9-io-D4f" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="20" id="kgU-uT-fEq"/>
                 <constraint firstItem="JI9-io-D4f" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="ze3-yq-2Os"/>
             </constraints>
-            <point key="canvasLocation" x="56.5" y="220"/>
+            <point key="canvasLocation" x="96.5" y="265.5"/>
         </customView>
     </objects>
 </document>

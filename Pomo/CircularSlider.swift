@@ -14,41 +14,40 @@ final class CircularSlider: NSView {
     // MARK: - Properties
     
     @IBInspectable
+    var startFocusMinute: Int = 0
+    
+    @IBInspectable
+    var focusTime: Int = 25 {
+        didSet {
+            needsDisplay = true
+        }
+    }
+    
+    @IBInspectable
+    var idleTime: Int = 5 {
+        didSet {
+            needsDisplay = true
+        }
+    }
+    
+    @IBInspectable
     var trackWidth: CGFloat = 20
     
     @IBInspectable
-    var segmentColor: NSColor = .lightGray
+    var trackGap: CGFloat = 2
     
     @IBInspectable
     var activeSegmentColor: NSColor = .darkGray
     
     @IBInspectable
-    var textColor: NSColor = .black
+    var idleSegmentColor: NSColor = .white
     
     @IBInspectable
-    var activeTextColor: NSColor = .white
-    
-    @IBInspectable
-    var font: NSFont = .systemFont(ofSize: 18.0, weight: .medium)
-    
-    @IBInspectable
-    var activeFont: NSFont = .systemFont(ofSize: 18.0, weight: .medium)
-    
-    @IBInspectable
-    var activeIndex: Int = 0 {
-        didSet {
-            //setNeedsDisplay()
-            needsDisplay = true
-        }
-    }
+    var trackColor: NSColor = .black
+
     
     // MARK: - Private properties
-    
-    private lazy var paragraphStyle: NSParagraphStyle = {
-        let paragraph = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
-        paragraph.alignment = .center
-        return paragraph.copy() as! NSParagraphStyle
-    }()
+    private var radius: CGFloat = 1
     
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -76,9 +75,6 @@ final class CircularSlider: NSView {
     
     override func mouseDragged(with event: NSEvent) {
         super.mouseDragged(with: event)
-        NSCursor.crosshair.set()
-        //let location = event.locationInWindow
-        //let location = event.locationInWindow
         let location = self.convert(event.locationInWindow, from: nil)
         
         NSLog("mouse dragged x: \(location.x) y: \(location.y)")
@@ -86,66 +82,70 @@ final class CircularSlider: NSView {
             NSCursor.openHand.set()
         }
     }
+    
     // MARK: - Drawing
+    
+    var focusStartAngle: CGFloat {
+        return minuteToAngle(minute: startFocusMinute)
+    }
+    var focusEndAngle: CGFloat {
+        return minuteToAngle(minute: startFocusMinute + focusTime)
+    }
+    
+    var idleStartAngle: CGFloat {
+        return focusEndAngle
+    }
+    
+    var idleEndAngle: CGFloat {
+        return minuteToAngle(minute: startFocusMinute + focusTime + idleTime)
+    }
+    
+    private func minuteToAngle(minute: Int) -> CGFloat {
+        return CGFloat(90 - minute * 6)
+    }
+    
+    lazy var lineCapAngle: CGFloat = {
+        let lineCapHeight = segmentWidth/2
+        let radians = atan(lineCapHeight/radius)
+        return ceil(radians * CGFloat(180 / Double.pi))
+    }()
+    
+    var segmentWidth: CGFloat {
+        return trackWidth - trackGap * 2
+    }
+    
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        //guard let context = NSGraphicsContext.current else { return }
-        //guard let context = NSGraphicsGetCurrentContext() else { return }
+        self.radius = min(rect.height/2, rect.width/2)
+        
         /*
          Draw background
         */
         let path = NSBezierPath()
         let origin = CGPoint(x: rect.midX, y: rect.midY)
-        let radius = min(rect.height/2, rect.width/2)
         path.appendArc(withCenter: origin, radius: radius - trackWidth, startAngle: 0, endAngle: 360)
         path.windingRule = NSBezierPath.WindingRule.evenOdd
         path.appendArc(withCenter: origin, radius: radius, startAngle: 0, endAngle: 360)
+        trackColor.setFill()
         path.fill()
         
-//        if Date.init().timeIntervalSince1970 > 0 {
-//            return
-//        }
-//        segmentColor.setFill()
-//        //context.setFillColor(segmentColor.cgColor)
-//        let backgroundPath = NSBezierPath.init(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
-//        backgroundPath.fill()
-        
-        
-//        /*
-//         Enumerate segments property and call drawing function for each item
-//         */
-//        segments.enumerated().forEach { index, title in
-//            let rect = CGRect(x: CGFloat(index) * segmentSize, y: 0, width: segmentSize, height: frame.height)
-//
-//            if activeIndex == index {
-//                /*
-//                 Draw background for active index
-//                 */
-//                activeSegmentColor.setFill()
-//                //context.setFillColor(activeSegmentColor.cgColor)
-//                let path = NSBezierPath.init(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
-//                path.fill()
-//
-//                draw(text: title, in: rect, with: activeTextColor, and: activeFont)
-//            } else {
-//                draw(text: title, in: rect, with: textColor, and: font)
-//            }
-//        }
+        /*
+         Draw segments
+         */
+        // Focus segment
+        let segmentPath = NSBezierPath()
+        segmentPath.appendArc(withCenter: origin, radius: radius - trackWidth/2, startAngle: focusStartAngle - lineCapAngle, endAngle: focusEndAngle + lineCapAngle, clockwise: true)
+        segmentPath.lineWidth = segmentWidth
+        segmentPath.lineCapStyle = .round
+        activeSegmentColor.setStroke()
+        segmentPath.stroke()
+        //Draw idle segment
+        let idlePath = NSBezierPath()
+        idlePath.appendArc(withCenter: origin, radius: radius - trackWidth/2, startAngle: idleStartAngle - lineCapAngle , endAngle: idleEndAngle + lineCapAngle, clockwise: true)
+        idlePath.lineWidth = segmentWidth
+        idlePath.lineCapStyle = .round
+        idleSegmentColor.setStroke()
+        idlePath.stroke()
     }
-    
-//    private func draw(text: String, in rect: CGRect, with color: NSColor, and font: NSFont) {
-//        /*
-//         Draw text with incomming parameters
-//         */
-//        var rect = rect
-//        let attributes: [NSAttributedString.Key: Any] = [.font: font,
-//                                                        .foregroundColor: color,
-//                                                        .paragraphStyle: paragraphStyle]
-//        let string = NSAttributedString(string: text, attributes: attributes)
-//        let size = string.size()
-//        rect.origin.y = (frame.height - size.height) / 2
-//        rect.size.height = size.height
-//        string.draw(in: rect)
-//    }
     
 }

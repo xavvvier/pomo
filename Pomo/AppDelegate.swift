@@ -40,6 +40,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func buildMenu() {
         let myView1 = CircularSlider(frame: NSRect(x: 0.0, y: 0.0, width: 150, height: 130))
         stopMenuItem.view = myView1
+        myView1.startFocusMinute = Calendar.current.component(.minute, from: Date())
+        myView1.focusTime = 25
+        myView1.idleTime = 5
         statusBarMenu.addItem(startMenuItem)
         statusBarMenu.addItem(stopMenuItem)
         statusBarMenu.addItem(NSMenuItem.separator())
