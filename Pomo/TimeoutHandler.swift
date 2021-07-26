@@ -63,12 +63,12 @@ class TimeoutHandler: NSObject {
 extension TimeoutHandler {
     func secondsToString(seconds: Int32) -> String {
         if seconds < 60 {
-            return "\(seconds)s"
+            return "\(seconds)\""
         } else {
             
             let minutesRemaining = Double(seconds)/60.0
             let minutes = round(minutesRemaining)
-            return "\(Int(minutes))m"
+            return "\(Int(minutes))'"
         }
 
     }

@@ -10,7 +10,7 @@ import CoreFoundation
 import CoreGraphics
 
 @IBDesignable
-final class CircularSlider: NSView {
+final class SliderView: NSView {
     // MARK: - Properties
     
     @IBInspectable

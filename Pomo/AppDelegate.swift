@@ -15,15 +15,18 @@ class SomeView: NSTextView {
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 //
-    let statusBarItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
+    let statusBarItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
+    
     let popover = NSPopover()
     var reference: Double!;
     let statusBarMenu = NSMenu(title: "");
     var startDate: NSDate = NSDate()
 
-    let startMenuItem = NSMenuItem(title: "Start", action: #selector(startTimer), keyEquivalent: "")
-    let stopMenuItem = NSMenuItem(title: "Stop", action: nil, keyEquivalent: "")
+    
+    let customMenuItem = NSMenuItem(title: "Stop", action: #selector(startTimer), keyEquivalent: "")
+    var sliderMenuItem: SliderMenuItem!
     let timer = TimeoutHandler()
+    
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusBarItem.button?.toolTip = "Click start to begin a new Pomo";
@@ -38,13 +41,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func buildMenu() {
-        let myView1 = CircularSlider(frame: NSRect(x: 0.0, y: 0.0, width: 150, height: 130))
-        stopMenuItem.view = myView1
-        myView1.startFocusMinute = Calendar.current.component(.minute, from: Date())
-        myView1.focusTime = 25
-        myView1.idleTime = 5
-        statusBarMenu.addItem(startMenuItem)
-        statusBarMenu.addItem(stopMenuItem)
+        sliderMenuItem = SliderMenuItem(frame: NSRect(x: 0.0, y: 0.0, width: 200, height: 160))
+        customMenuItem.view = sliderMenuItem
+        sliderMenuItem.slider.startFocusMinute = Calendar.current.component(.minute, from: Date())
+        sliderMenuItem.slider.focusTime = 25
+        sliderMenuItem.slider.idleTime = 5
+        sliderMenuItem.onClicked = { 
+            self.startTimer()
+        }
+        statusBarMenu.addItem(customMenuItem)
         statusBarMenu.addItem(NSMenuItem.separator())
         statusBarMenu.addItem(
             withTitle: "Settings...",
@@ -56,6 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 keyEquivalent: "")
     }
     
+
     @objc func quit() {
         NSApplication.shared.terminate(nil)
     }
@@ -63,8 +69,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func startTimer() {
         statusBarItem.button?.toolTip = "In a POMO!";
         statusBarItem.button?.image = nil;
-        statusBarMenu.items[0].action = nil
-        statusBarMenu.items[1].action = #selector(cancelTimer)
+        sliderMenuItem.toggleIcon()
         startDate = NSDate()
         timer.timeoutCallback = completeTimer
         timer.tickerCallback = elapsedTimer
@@ -72,10 +77,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func elapsedTimer(remaining: String) {
-        statusBarItem.button?.title = "▶︎ \(remaining)";
+        statusBarItem.button?.title = "\(remaining)";
     }
     
     @objc func completeTimer() {
+        NSLog("completed timer")
         cancelTimer()
         savePomoMO()
         showNotification()
@@ -127,14 +133,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func cancelTimer() {
+        sliderMenuItem.toggleIcon()
         statusBarItem.button?.toolTip = "Click start to begin a new Pomo";
         timer.cancel()
         let icon = NSImage(named: "icon3.png");
         icon?.isTemplate = true;
         statusBarItem.button?.image = icon;
         statusBarItem.button?.title = "";
-        statusBarMenu.items[0].action = #selector(startTimer)
-        statusBarMenu.items[1].action = nil
     }
     
     func showLocalNotification(title: String, subtitle: String) {

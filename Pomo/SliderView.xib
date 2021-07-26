@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SliderMenuItem" customModule="Pomo" customModuleProvider="target">
+            <connections>
+                <outlet property="button" destination="udP-3O-D1P" id="FY6-6f-pc0"/>
+                <outlet property="slider" destination="JI9-io-D4f" id="7BG-VU-Rdv"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="215" height="197"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="JI9-io-D4f" customClass="SliderView" customModule="Pomo" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="215" height="197"/>
+                    <subviews>
+                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z1n-gN-TyJ">
+                            <rect key="frame" x="0.0" y="382" width="30" height="38"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="b1R-ie-5QP">
+                                <imageReference key="image" image="zzz" catalog="system" symbolScale="large"/>
+                            </imageCell>
+                            <color key="contentTintColor" name="AccentColor"/>
+                        </imageView>
+                        <imageView autoresizesSubviews="NO" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kYw-mB-ntc">
+                            <rect key="frame" x="235" y="426" width="39" height="40"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="qu0-zy-dQQ">
+                                <imageReference key="image" image="hammer" catalog="system" symbolScale="large"/>
+                            </imageCell>
+                            <color key="contentTintColor" name="AccentColor"/>
+                        </imageView>
+                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="udP-3O-D1P">
+                            <rect key="frame" x="69" y="59" width="76" height="80"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <buttonCell key="cell" type="bevel" title="Start" bezelStyle="rounded" image="play" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="h3J-rd-GMH">
+                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                <font key="font" metaFont="system" size="29"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="middleButtonClick:" target="-2" id="bYV-2T-76d"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="startFocusMinute">
+                            <integer key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="focusTime">
+                            <integer key="value" value="30"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="trackWidth">
+                            <real key="value" value="24"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="idleTime">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="trackGap">
+                            <real key="value" value="3"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="JI9-io-D4f" secondAttribute="trailing" id="032-14-32N"/>
+                <constraint firstItem="JI9-io-D4f" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="C4y-6W-TOc"/>
+                <constraint firstAttribute="bottom" secondItem="JI9-io-D4f" secondAttribute="bottom" id="GwH-z8-oYT"/>
+                <constraint firstItem="JI9-io-D4f" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="crh-AH-vhf"/>
+            </constraints>
+            <point key="canvasLocation" x="-26.5" y="101.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="hammer" catalog="system" width="23" height="22"/>
+        <image name="play" catalog="system" width="12" height="13"/>
+        <image name="zzz" catalog="system" width="18" height="19"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
